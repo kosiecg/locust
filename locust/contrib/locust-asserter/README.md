@@ -5,11 +5,10 @@ performance tests written in [Locust framework](https://docs.locust.io/en/stable
 
 ## Table of contents
 
+- [Where to find locust-asserter](#where-to-find-locust-asserter)
 - [Installation](#installation)
     + [Installation by pip](#installation-by-pip)
-    + [Installation by uv](#installation-by-uv)
-        - [Manually](#manually)
-        - [Using pyproject.toml](#using-pyprojecttoml)
+    + [Installation by uv using pyproject.toml](#installation-by-uv-using-pyprojecttoml)
 - [Usage example](#usage-example)
     + [Possible stats to use in assertions](#possible-stats-to-use-in-assertions)
     + [Possible operators](#possible-operators)
@@ -23,26 +22,37 @@ performance tests written in [Locust framework](https://docs.locust.io/en/stable
     + [Error: No data gathered from locust stats](#error-no-data-gathered-from-locust-stats)
 - [Author](#author)
 
+## Where to find locust-asserter
+
+The package can be found inside fork of [locust](https://github.com/locustio/locust) repository: [kosiecg/locust](https://github.com/kosiecg/locust) on branch [add-locust-asserter](https://github.com/kosiecg/locust/tree/add-locust-asserter)
+
+The exact package location is: [locust/locust/contrib/locust-asserter](https://github.com/kosiecg/locust/tree/add-locust-asserter/locust/contrib/locust-asserter)
+
 ## Installation
 
+First you need to clone fork of locust repository [kosiecg/locust](https://github.com/kosiecg/locust) on branch [add-locust-asserter](https://github.com/kosiecg/locust/tree/add-locust-asserter) 
+
 ### Installation by pip
+As a prerequisite see: [Installation](#installation)
 
-`python -m pip install locust-asserter`
+```bash
+python -m pip install --editable <your path to cloned repository>/locust/locust/contrib/locust-asserter
+```
 
-### Installation by uv
+### Installation by uv using pyproject.toml
+As a prerequisite see: [Installation](#installation)
 
-#### Manually
-
-`uv pip install locust-asserter`
-
-#### Using pyproject.toml
 
 ```
 [project]
 requires-python = ">=3.11"
 dependencies = [
-    "locust-asserter >= 1.4.0"
+    "locust >= 2.34.0",
+    "gevent == 24.11.1; sys_platform == 'win32'", # Currently for Windows newer versions are not working
+    "locust-asserter == 1.5.0"
 ]
+[tool.uv.sources]
+locust-asserter = { path = "<your path to cloned repository>/locust/locust/contrib/locust-asserter", editable = true }
 ```
 
 and then command `uv run` can be used
