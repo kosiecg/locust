@@ -1,0 +1,36 @@
+---
+# Before making changes in this file, check if they are compatible with pyproject.toml
+
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.12.10  # Pin the same version in the pyproject.toml
+    hooks:
+      # Run the linter.
+      - id: ruff
+        args: [--fix]
+      # Run the formatter.
+      - id: ruff-format
+
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-yaml  # See https://github.com/pre-commit/pre-commit-hooks/issues/273
+        args: [--unsafe]
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.8.13
+    hooks:
+      - id: uv-lock
+
+  - repo: local
+    hooks:
+      - id: pylint
+        name: pylint
+        entry: uv run pylint --rcfile .pylintrc --verbose --output-format=colorized --fail-under=10.0 src/
+        language: python
+        additional_dependencies: [ uv ]
+        pass_filenames: false  # Don't pass individual files, run on the whole src/ directory
+        always_run: true
